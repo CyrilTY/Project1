@@ -8,8 +8,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText editText_1;
+    private EditText editText_2;
+    private EditText editText_3;
+    private EditText editText_4;
+    private EditText editText_5;
+    private EditText editText_6;
+
+    private SeekBar seekBar_1;
+    private SeekBar seekBar_2;
+    private SeekBar seekBar_3;
+    private SeekBar seekBar_4;
+    private SeekBar seekBar_5;
+    private SeekBar seekBar_6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        editText_1 = findViewById(R.id.editText2);
+        seekBar_1 = findViewById(R.id.seekBar1);
+
+        seekBar_1.setOnSeekBarChangeListener(new MySeekBarChangeListener(editText_1));
+    }
+
+
+
+
+    public void seekbar_1(){
+
     }
 
     @Override
