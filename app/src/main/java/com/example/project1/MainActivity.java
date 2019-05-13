@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,19 +15,19 @@ import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editText_1;
-    private EditText editText_2;
-    private EditText editText_3;
-    private EditText editText_4;
-    private EditText editText_5;
-    private EditText editText_6;
+    private EditText eText1;
+    private EditText eText2;
+    private EditText eText3;
+    private EditText eText4;
+    private EditText eText5;
+    private EditText eText6;
 
-    private SeekBar seekBar_1;
-    private SeekBar seekBar_2;
-    private SeekBar seekBar_3;
-    private SeekBar seekBar_4;
-    private SeekBar seekBar_5;
-    private SeekBar seekBar_6;
+    private SeekBar sBar1;
+    private SeekBar sBar2;
+    private SeekBar sBar3;
+    private SeekBar sBar4;
+    private SeekBar sBar5;
+    private SeekBar sBar6;
 
 
     @Override
@@ -44,18 +46,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        editText_1 = findViewById(R.id.editText2);
-        seekBar_1 = findViewById(R.id.seekBar1);
+        eText1 = findViewById(R.id.editText2);
+        sBar1 = findViewById(R.id.seekBar1);
+        sBar1.setOnSeekBarChangeListener(new MySeekBarChangeListener(eText1));
 
-        seekBar_1.setOnSeekBarChangeListener(new MySeekBarChangeListener(editText_1));
+        eText1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                eText1.setSelection(eText1.getText().length());
+                try {
+                    sBar1.setProgress(Integer.parseInt(s.toString()));
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+        /*
+        editText_2 = findViewById(R.id.editText3);
+        seekBar_2 = findViewById(R.id.seekBar2);
+        seekBar_2.setOnSeekBarChangeListener(new MySeekBarChangeListener(editText_2)); */
+
     }
 
-
-
-
-    public void seekbar_1(){
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
