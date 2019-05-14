@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextClock;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,29 +50,8 @@ public class MainActivity extends AppCompatActivity {
         eText1 = findViewById(R.id.editText2);
         sBar1 = findViewById(R.id.seekBar1);
         sBar1.setOnSeekBarChangeListener(new MySeekBarChangeListener(eText1));
+        eText1.addTextChangedListener(new NewWatcher(sBar1, eText1));
 
-        eText1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                eText1.setSelection(eText1.getText().length());
-                try {
-                    sBar1.setProgress(Integer.parseInt(s.toString()));
-                } catch (Exception e) {
-
-                }
-
-            }
-        });
         /*
         editText_2 = findViewById(R.id.editText3);
         seekBar_2 = findViewById(R.id.seekBar2);

@@ -1,19 +1,18 @@
 package com.example.project1;
 
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
-public class EditListener implements TextWatcher{
+public class NewWatcher implements TextWatcher{
+    private SeekBar seekBar;
+    private EditText editText;
 
-    private EditText toChange;
-    private SeekBar seekbar;
+    public NewWatcher(SeekBar seekBar, EditText editText){
 
-    public EditListener(TextWatcher watcher) {
-
-
+        this.editText = editText;
+        this.seekBar = seekBar;
     }
 
     @Override
@@ -28,13 +27,13 @@ public class EditListener implements TextWatcher{
 
     @Override
     public void afterTextChanged(Editable s) {
-        toChange.setSelection(toChange.getText().length());
-        try{
-           seekbar.setProgress(Integer.parseInt(s.toString()));
+        int i = Integer.parseInt(s.toString());
+        if (i >= 0 && i <= 40) {
+           seekBar.setProgress( i - 0);
         }
-        catch (Exception e ){
-
+        else {
+            int j = seekBar.getProgress();
+            editText.setSelection(j);
         }
-
     }
 }
