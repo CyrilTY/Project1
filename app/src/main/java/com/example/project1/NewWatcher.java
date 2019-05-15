@@ -5,13 +5,12 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
-public class NewWatcher implements TextWatcher{
+public class NewWatcher implements TextWatcher {
     private SeekBar seekBar;
     private EditText editText;
 
-    public NewWatcher(SeekBar seekBar, EditText editText){
+    public NewWatcher(SeekBar seekBar) {
 
-        this.editText = editText;
         this.seekBar = seekBar;
     }
 
@@ -22,18 +21,16 @@ public class NewWatcher implements TextWatcher{
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        if (editText.getText().toString().isEmpty()) {
+            editText.setText("0");
+        }
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-        int i = Integer.parseInt(s.toString());
-        if (i >= 0 && i <= 40) {
-           seekBar.setProgress( i - 0);
-        }
-        else {
-            int j = seekBar.getProgress();
-            editText.setSelection(j);
+        if (s.length() > 0) {
+            seekBar.setProgress(Integer.parseInt(s.toString()));
         }
     }
+
 }
