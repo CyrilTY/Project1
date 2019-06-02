@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void test() {
         eText1 = findViewById(R.id.editText1);
         sBar1 = findViewById(R.id.seekBar1);
