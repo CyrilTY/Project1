@@ -54,12 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void test() {
-        eText1 = findViewById(R.id.editText1);
-        sBar1 = findViewById(R.id.seekBar1);
-        sBar1.setOnSeekBarChangeListener(new MySeekBarChangeListener(eText1));
-        eText1.addTextChangedListener(new NewWatcher(sBar1));
-    }
 
     public void eText1_sBar1() {
         eText1 = findViewById(R.id.editText1);
