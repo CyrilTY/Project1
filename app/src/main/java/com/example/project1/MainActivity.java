@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText eText4;
     private EditText eText5;
     private EditText eText6;
+    private EditText [] editText;
+
+    private TextView tViewAverage;
 
     private SeekBar sBar1;
     private SeekBar sBar2;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar sBar4;
     private SeekBar sBar5;
     private SeekBar sBar6;
+    private SeekBar [] seekbar ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,31 @@ public class MainActivity extends AppCompatActivity {
         eText4_sBar4();
         eText5_sBar5();
         eText6_sBar6();
+
+        editText [0] = findViewById(R.id.editText1);
+        editText [1] = findViewById(R.id.editText2);
+        editText [2] = findViewById(R.id.editText3);
+        editText [3] = findViewById(R.id.editText4);
+        editText [4] = findViewById(R.id.editText5);
+        editText [5] = findViewById(R.id.editText6);
+
+        seekbar [0] = findViewById(R.id.seekBar1);
+        seekbar [1] = findViewById(R.id.seekBar2);
+        seekbar [2] = findViewById(R.id.seekBar3);
+        seekbar [3] = findViewById(R.id.seekBar4);
+        seekbar [4] = findViewById(R.id.seekBar5);
+        seekbar [5] = findViewById(R.id.seekBar6);
+
+        tViewAverage = findViewById(R.id.average);
+
+        for(int i = 0; i < seekbar.length; i++){
+            editText[i].setText("0");
+            seekbar[i].setOnSeekBarChangeListener();
+        }
+
+        for(int i = 0; i < editText.length; i++){
+            editText[i].addTextChangedListener();
+        }
 
     }
 
