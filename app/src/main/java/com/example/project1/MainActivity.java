@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText eText1;
     private EditText eText2;
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private double average = 0;
 
     private Button aButton;
+    private FloatingActionButton buttonFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton buttonFab = findViewById(R.id.fab);
-        buttonFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openNextActivity();
-            }
-        });
+        buttonFab = (FloatingActionButton)findViewById(R.id.fab);
+        buttonFab.setOnClickListener(this);
 
         aButton = findViewById(R.id.averageButton);
 
@@ -85,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             editTextArray[i].addTextChangedListener(new Change(i));
         }
 
-
         eText1_sBar1();
         eText2_sBar2();
         eText3_sBar3();
@@ -94,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
         eText6_sBar6();
         averageCalculate();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==buttonFab){
+            Intent intent = new Intent(this, NextActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void eText1_sBar1() {
@@ -280,10 +283,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openNextActivity(){
-        Intent intent = new Intent(this, NextActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -306,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 }

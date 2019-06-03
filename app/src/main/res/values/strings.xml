@@ -24,5 +24,6 @@
     <string name="action_button_2">DELETE ALL AND START OVER</string>
 
     <string name="action_checkbox_1">Compute hint for improvement to a better grade.</string>
+    <string name="main_back_end">Dismiss</string>
 
 </resources>

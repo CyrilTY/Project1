@@ -11,6 +11,7 @@ public class Change implements TextWatcher, SeekBar.OnSeekBarChangeListener {
     public static TextView ergebnis;
     public static MainActivity context;
     int point;
+
     Change(int i){
         point = i;
 
