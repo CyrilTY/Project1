@@ -1,8 +1,7 @@
 package com.example.project1;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -10,9 +9,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText eText4;
     private EditText eText5;
     private EditText eText6;
-    private EditText [] editText;
+    private EditText [] editTextArray = new EditText[6];
 
     private TextView tViewAverage;
 
@@ -32,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar sBar4;
     private SeekBar sBar5;
     private SeekBar sBar6;
-    private SeekBar [] seekbar ;
+    private SeekBar [] seekbarArray = new SeekBar[6];
+
+    private double average = 0;
+
+    private Button aButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +48,43 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton buttonFab = findViewById(R.id.fab);
+        buttonFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                openNextActivity();
             }
         });
+
+        aButton = findViewById(R.id.averageButton);
+
+        editTextArray[0] = findViewById(R.id.editText1);
+        editTextArray[1] = findViewById(R.id.editText2);
+        editTextArray[2] = findViewById(R.id.editText3);
+        editTextArray[3] = findViewById(R.id.editText4);
+        editTextArray[4] = findViewById(R.id.editText5);
+        editTextArray[5] = findViewById(R.id.editText6);
+
+        seekbarArray[0] = findViewById(R.id.seekBar1);
+        seekbarArray[1] = findViewById(R.id.seekBar2);
+        seekbarArray[2] = findViewById(R.id.seekBar3);
+        seekbarArray[3] = findViewById(R.id.seekBar4);
+        seekbarArray[4] = findViewById(R.id.seekBar5);
+        seekbarArray[5] = findViewById(R.id.seekBar6);
+
+        tViewAverage = findViewById(R.id.average);
+
+        Change.ergebnis = tViewAverage;
+        Change.context = this;
+        for(int i = 0; i < seekbarArray.length; i++){
+            editTextArray[i].setText("0");
+            seekbarArray[i].setOnSeekBarChangeListener(new Change(i));
+        }
+
+        for(int i = 0; i < editTextArray.length; i++){
+            editTextArray[i].addTextChangedListener(new Change(i));
+        }
+
 
         eText1_sBar1();
         eText2_sBar2();
@@ -56,34 +92,9 @@ public class MainActivity extends AppCompatActivity {
         eText4_sBar4();
         eText5_sBar5();
         eText6_sBar6();
-
-        editText [0] = findViewById(R.id.editText1);
-        editText [1] = findViewById(R.id.editText2);
-        editText [2] = findViewById(R.id.editText3);
-        editText [3] = findViewById(R.id.editText4);
-        editText [4] = findViewById(R.id.editText5);
-        editText [5] = findViewById(R.id.editText6);
-
-        seekbar [0] = findViewById(R.id.seekBar1);
-        seekbar [1] = findViewById(R.id.seekBar2);
-        seekbar [2] = findViewById(R.id.seekBar3);
-        seekbar [3] = findViewById(R.id.seekBar4);
-        seekbar [4] = findViewById(R.id.seekBar5);
-        seekbar [5] = findViewById(R.id.seekBar6);
-
-        tViewAverage = findViewById(R.id.average);
-
-        for(int i = 0; i < seekbar.length; i++){
-            editText[i].setText("0");
-            seekbar[i].setOnSeekBarChangeListener();
-        }
-
-        for(int i = 0; i < editText.length; i++){
-            editText[i].addTextChangedListener();
-        }
+        averageCalculate();
 
     }
-
 
     public void eText1_sBar1() {
         eText1 = findViewById(R.id.editText1);
@@ -247,6 +258,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Nachhilfe HerrLehmann0xcc@gmail.com
+    public void averageCalculate(){
+        float summe = 0;
+        int count = 0;
+        for(int i = 0; i < editTextArray.length; i++){
+            int point = Integer.parseInt(editTextArray[i].getText().toString());
+
+            summe = summe + point * (i + 1);
+            count = count + point;
+        }
+        average = summe / count;
+        tViewAverage.setText(String.format(Locale.getDefault(), "%f", average));
+
+        if(average < 2.5)
+            aButton.setBackgroundColor(0xFF00FF00);
+        else if (average < 3.5)
+            aButton.setBackgroundColor(0xFFFFFF00);
+        else if(average > 3.6)
+            aButton.setBackgroundColor(0xFFFF0000);
+
+    }
+
+    public void openNextActivity(){
+        Intent intent = new Intent(this, NextActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -269,4 +306,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
