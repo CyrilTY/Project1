@@ -14,10 +14,31 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText subject_name;
+
+    public void addGrade(View view) {
+        Grade grade = new Grade();
+
+        grade.fach = subject_name.getText().toString();
+        grade.note = (int) average;
+
+        bericht.add(grade);
+    }
+
+    class Grade{
+        public String fach;
+        public int note;
+    }
+
+
+    private ArrayList<Grade> bericht = new ArrayList<>(5);
 
     private EditText eText1;
     private EditText eText2;
@@ -49,10 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        buttonFab = (FloatingActionButton)findViewById(R.id.fab);
+        buttonFab = findViewById(R.id.fab);
         buttonFab.setOnClickListener(this);
 
         aButton = findViewById(R.id.averageButton);
+
+        subject_name = findViewById(R.id.subject_name);
+
 
         editTextArray[0] = findViewById(R.id.editText1);
         editTextArray[1] = findViewById(R.id.editText2);
@@ -68,19 +92,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         seekbarArray[4] = findViewById(R.id.seekBar5);
         seekbarArray[5] = findViewById(R.id.seekBar6);
 
-        tViewAverage = findViewById(R.id.average);
+        Subjectchecker mychecker = new Subjectchecker(aButton , editTextArray, seekbarArray);
+        subject_name.addTextChangedListener(mychecker);
+        subject_name.setText("");
 
+        tViewAverage = findViewById(R.id.average);
         Change.ergebnis = tViewAverage;
         Change.context = this;
-        for(int i = 0; i < seekbarArray.length; i++){
+        for (int i = 0; i < seekbarArray.length; i++) {
             editTextArray[i].setText("0");
             seekbarArray[i].setOnSeekBarChangeListener(new Change(i));
         }
 
-        for(int i = 0; i < editTextArray.length; i++){
+        for (int i = 0; i < editTextArray.length; i++) {
             editTextArray[i].addTextChangedListener(new Change(i));
         }
 
+        //eText_0();
         eText1_sBar1();
         eText2_sBar2();
         eText3_sBar3();
@@ -95,6 +123,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v==buttonFab){
             Intent intent = new Intent(this, NextActivity.class);
+            String [] faecher = new String[bericht.size()];
+            int [] noten = new int[bericht.size()];
+
+            int i = 0;
+            for(Grade g : bericht){
+                faecher[i] = g.fach;
+                noten[i] = g.note;
+                i++;
+            }
+            intent.putExtra("Fächer", faecher);
+            intent.putExtra("noten", noten);
             startActivity(intent);
         }
     }
@@ -260,13 +299,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
     }
-
-    // Nachhilfe HerrLehmann0xcc@gmail.com
+    
     public void averageCalculate(){
         float summe = 0;
         int count = 0;
         for(int i = 0; i < editTextArray.length; i++){
-            int point = Integer.parseInt(editTextArray[i].getText().toString());
+            String valueAsString = editTextArray[i].getText().toString();
+            valueAsString = (valueAsString.length() == 0)? "0": valueAsString;
+
+            int point = Integer.parseInt(valueAsString);
 
             summe = summe + point * (i + 1);
             count = count + point;
@@ -305,7 +346,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }
