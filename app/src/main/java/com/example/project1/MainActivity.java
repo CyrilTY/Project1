@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText [] editTextArray = new EditText[6];
 
     private TextView tViewAverage;
+    private TextView average_textView;
 
     private SeekBar sBar1;
     private SeekBar sBar2;
@@ -58,10 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar sBar6;
     private SeekBar [] seekbarArray = new SeekBar[6];
 
-    private double average = 0;
+    private double average;
 
     private Button aButton;
     private FloatingActionButton buttonFab;
+    private Button deletebutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +119,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         eText6_sBar6();
         averageCalculate();
 
+        average_textView = findViewById(R.id.average);
+        deletebutton = findViewById(R.id.deleteButton);
+        deletebutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                bericht.clear();
+                subject_name.setText("");
+                for(int i=0;i<editTextArray.length;i++) editTextArray[i].setText("0");
+                average_textView.setText("");
+            }
+        });
     }
 
     @Override
@@ -151,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (eText1.getText().toString().isEmpty()) {
-                    eText1.setText("0");
+                    //eText1.setText("0");
                 }
             }
 
@@ -178,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (eText2.getText().toString().isEmpty()) {
-                    eText2.setText("0");
+                  //  eText2.setText("0");
                 }
             }
 
@@ -205,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (eText3.getText().toString().isEmpty()) {
-                    eText3.setText("0");
+                    //eText3.setText("0");
                 }
             }
 
@@ -232,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (eText4.getText().toString().isEmpty()) {
-                    eText4.setText("0");
+                    //eText4.setText("0");
                 }
             }
 
@@ -259,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (eText5.getText().toString().isEmpty()) {
-                    eText5.setText("0");
+                    //eText5.setText("0");
                 }
             }
 
@@ -286,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (eText6.getText().toString().isEmpty()) {
-                    eText6.setText("0");
+                    //eText6.setText("0");
                 }
             }
 
